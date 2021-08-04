@@ -1,4 +1,5 @@
 import unittest
+from secondary_functions import add_one
 #import system_settings
 from system_settings import path
 from dotenv import load_dotenv
@@ -10,7 +11,7 @@ import pages
 load_dotenv()  # looks for a . env file and load the environment variables and make them accessible to the project
 email = os.getenv('EMAIL')
 password = os.getenv('PASSWORD')
-board_title = os.getenv('BOARD_TITLE')
+board_title = os.getenv('BOARD_TITLE') + str(add_one())
 #email = "test4203@mail.ru"
 #password = "Gy[Qu$j$!R8e)w5"
 #board_title = "This is first board"
@@ -49,10 +50,12 @@ class TrelloTestOnePlentific(unittest.TestCase):
 
         #
         first_board=pages.CreateABoard(self.driver)
-        first_board.create_a_board(board_title)
+        first_board.create_a_board()
+        first_board.set_title(board_title)
 
 
     def tearDown(self):
+        pages.DeleteWorkspace(self.driver)
         self.driver.close()
 
 
